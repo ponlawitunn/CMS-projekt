@@ -1,0 +1,37 @@
+img {
+  height: 380px;
+  width: 355px;
+  margin-top: 2em;
+}
+button {
+  height: 4em;
+  width: 10%;
+  padding: 1.5em auto;
+  margin: 1em auto;
+  background-color: rgb(158, 129, 158);
+ 
+  border: none;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+  transition: all 0.2s cubic-bezier(.4,0,.2,1);
+  color: white;
+  
+}
+button:hover {
+  letter-spacing: 0.8em;
+  background-color: violet;
+}
+#cartCss {
+  background-color: wheat;
+  padding: 3em;
+  border: solid black 1px;
+}
+.shoppingCart {
+  padding: 3em;
+  border: solid black 1px;
+  padding: 1em;
+}
+#icon1 {
+  padding: 5px;
+}
