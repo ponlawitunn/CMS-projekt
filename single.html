@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Thai Food</title>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="single.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
@@ -22,13 +23,76 @@
       <div id="productsShow1" class="well"></div>
     </div>
 
+
+     <div id="inputContent">
+        <div class="row">
+            <div>
+              <label>Name:
+                <input type="text" id='nameInput' placeholder='Name' />
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+                <label>Rating:
+                    <select id="ratingInput">
+                        <option value="1">1 </option>
+                        <option value="2">2 </option>
+                        <option value="3">3 </option>
+                        <option value="4">4 </option>
+                        <option value="5">5 </option>
+                    </select>
+                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                </label>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label>Comment:
+                <textarea id='messageInput' placeholder='Message'></textarea>
+              </label>
+            </div>
+          </div>
+     </div> 
+      
+      <div class="row">
+        <div>
+          <div id='messagesDiv' class="msg-wrapper"><span class="glyphicon glyphicon-leaf" aria-hidden="true"></span><h4>Review and Comment: </h4>
+          </div>
+          <hr />
+         </div>
+      </div>
+    
+
+
+
     <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
   <script src="index.js"></script>
+  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
   <script>
     getProduct();
+    var myDataRef = new Firebase('https://thanhchat.firebaseio.com');
+      $('#messageInput').keypress(function (e) {
+        if (e.keyCode == 13) {
+          var name = $('#nameInput').val();
+          var text = $('#messageInput').val();
+          var rating = $('#ratingInput').val();
+          myDataRef.push({name: name, text: text, rating: rating});
+          $('#messageInput').val('');
+        }
+      });
+      myDataRef.on('child_added', function(snapshot) {
+        var message = snapshot.val();
+        displayChatMessage(message.name, message.text, message.rating);
+      });
+      function displayChatMessage(name, text, rating) {
+        $('<div/ id="contentName">').text(name).prepend($('<em/>').text('Name: ')).appendTo($('#messagesDiv'));
+        $('<div/ id="contentComment">').text(text).prepend($('<em/>').text('Comment: ')).appendTo($('#messagesDiv'));
+        $('<div/ id="contentRating">').text(rating).prepend($('<em/>').text('Rating: ')).appendTo($('#messagesDiv'));
+      };
   </script>
   </body>
 </html>
